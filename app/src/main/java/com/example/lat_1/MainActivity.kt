@@ -1,58 +1,84 @@
 package com.example.lat_1
 
+import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+//import android.os.PersistableBundle
+import android.util.Log
+import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
 import com.example.lat_1.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
+    //deklarasikan variable bersifat lateinit best practice
     private lateinit var binding: ActivityMainBinding
+    private lateinit var btnPindah : Button
+    //val btnPindah = binding.button
 
+    //override function yang menyatakan state dari aplikasi, persistentState tidak bisa diterapin di sini
     override fun onCreate(savedInstanceState: Bundle?) {
+        //Menyimpan state, persisten state
         super.onCreate(savedInstanceState)
+//        super.onCreate(savedInstanceState, persistentState)
+        //debugging
+        Log.d("ActivityLifecycle", "oncreate")
+
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //val btnPindah = binding.button
+        //setContentView(R.layout.activity_main)
 
-        setSupportActionBar(binding.toolbar)
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        //debugging
+        Log.d("ActivityLifecycle", "oncreate")
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("ActivityLifecycle", "onstart")
+        //btn pindah akan digunakan, deklarasikan nilainya
+        btnPindah = binding.button
+        Log.d("cek",btnPindah.toString())
+        btnPindah.setOnClickListener {
+            //debugging
+            Log.d("Pencet","btnPindah di pencet")
+            //toast
+            Toast.makeText(this,"You Click Me !!!", Toast.LENGTH_SHORT).show()
+            //intent
+            //::class.java -> delcared SecondActivity as Java Object
+            intent = Intent(this,SecondActivity::class.java)
+            startActivity(intent)
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
+    override fun onRestart() {
+        super.onRestart()
+        Log.d("ActivityLifecycle", "onrestart")
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
+    override fun onResume() {
+        super.onResume()
+        Log.d("ActivityLifecycle", "onresume")
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
+    override fun onPause() {
+        super.onPause()
+        Log.d("ActivityLifecycle", "onpause")
     }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("ActivityLifecycle", "onstop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("ActivityLifecycle", "ondestroy")
+    }
+
 }
