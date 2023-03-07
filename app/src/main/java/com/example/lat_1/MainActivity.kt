@@ -4,17 +4,39 @@ import android.content.Intent
 import android.os.Bundle
 //import android.os.PersistableBundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.lat_1.databinding.ActivityMainBinding
+import com.google.android.material.textfield.TextInputEditText
+
+//Next Bundle dan kawan-kawan
+//Move for result
 
 class MainActivity : AppCompatActivity() {
 
     //deklarasikan variable bersifat lateinit best practice
     private lateinit var binding: ActivityMainBinding
-    private lateinit var btnPindah : Button
-    //val btnPindah = binding.button
+    private lateinit var btnACC : Button
+    private lateinit var tieNama : TextInputEditText
+    private lateinit var tieEmail : TextInputEditText
+    private lateinit var nama : String
+    private lateinit var email : String
+    private lateinit var btnMove : Button
+    //Function
+    fun initComponent()
+    {
+        tieNama = binding.namaTie
+        tieEmail = binding.emailTie
+        nama = tieNama.text.toString()
+        email = tieEmail.text.toString()
+    }
+
+    fun showButton()
+    {
+        btnMove.visibility = View.VISIBLE
+    }
 
     //override function yang menyatakan state dari aplikasi, persistentState tidak bisa diterapin di sini
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +48,9 @@ class MainActivity : AppCompatActivity() {
 
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        val view = binding.root
+        //Log.d("CurrentView", view.)
+        setContentView(view)
         //val btnPindah = binding.button
         //setContentView(R.layout.activity_main)
 
@@ -42,18 +66,34 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         Log.d("ActivityLifecycle", "onstart")
         //btn pindah akan digunakan, deklarasikan nilainya
-        btnPindah = binding.button
-        Log.d("cek",btnPindah.toString())
-        btnPindah.setOnClickListener {
-            //debugging
-            Log.d("Pencet","btnPindah di pencet")
-            //toast
-            Toast.makeText(this,"You Click Me !!!", Toast.LENGTH_SHORT).show()
-            //intent
-            //::class.java -> delcared SecondActivity as Java Object
-            intent = Intent(this,SecondActivity::class.java)
-            startActivity(intent)
+        btnACC = binding.button
+        Log.d("cek",btnACC.toString())
+        btnACC.setOnClickListener {
+            //inisialisasi variabel yang digunakan
+            initComponent()
+            //debugging variabel
+            Log.d("input", nama)
+            Log.d("input", email)
+            showButton()
         }
+
+        //Harus diinit dulu btnMove ini terhubung dengan siapa
+        btnMove = binding.button2
+
+        Log.d("cekKondisi" , (btnMove.visibility == View.VISIBLE).toString()) // pada dasarnya ini ngga dibutuhkan karena
+        //saat dia visible dia tidak dibaca oleh aplikasi.
+
+            btnMove.setOnClickListener {
+                //persiapan bundle
+                val bundle = Bundle() // object bundle
+                bundle.putString("nama", nama)
+                bundle.putString("email", email)
+//                Log.d("CurrentView", )
+                //Move Page
+                intent = Intent(this, SecondActivity::class.java) // buat intent dengan bundle
+                intent.putExtras(bundle)
+                startActivity(intent) // jalankan activity tersebut
+            }
     }
 
     override fun onRestart() {
