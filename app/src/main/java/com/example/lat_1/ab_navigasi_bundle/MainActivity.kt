@@ -1,4 +1,4 @@
-package com.example.lat_1
+package com.example.lat_1.ab_navigasi_bundle
 
 import android.content.Intent
 import android.os.Bundle
@@ -25,11 +25,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var email : String
     private lateinit var btnMove : Button
     //Function
-
-
     fun initComponent()
     {
-        //init component input
         tieNama = binding.namaTie
         tieEmail = binding.emailTie
         nama = tieNama.text.toString()
@@ -38,24 +35,30 @@ class MainActivity : AppCompatActivity() {
 
     fun showButton()
     {
-        //tampilkan tommbol untuk pindah halaman
         btnMove.visibility = View.VISIBLE
     }
 
+    //override function yang menyatakan state dari aplikasi, persistentState tidak bisa diterapin di sini
     override fun onCreate(savedInstanceState: Bundle?) {
+        //Menyimpan state, persisten state
         super.onCreate(savedInstanceState)
-
+//        super.onCreate(savedInstanceState, persistentState)
         //debugging
         Log.d("ActivityLifecycle", "oncreate")
 
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
+        //Log.d("CurrentView", view.)
         setContentView(view)
+        //val btnPindah = binding.button
+        //setContentView(R.layout.activity_main)
 
 
         //debugging
         Log.d("ActivityLifecycle", "oncreate")
+
+
 
     }
 
@@ -74,14 +77,18 @@ class MainActivity : AppCompatActivity() {
             showButton()
         }
 
-        //Harus diinit dulu btnMove ini sebelum dibuat check listenernya
+        //Harus diinit dulu btnMove ini terhubung dengan siapa
         btnMove = binding.button2
+
         Log.d("cekKondisi" , (btnMove.visibility == View.VISIBLE).toString()) // pada dasarnya ini ngga dibutuhkan karena
         //saat dia visible dia tidak dibaca oleh aplikasi.
 
             btnMove.setOnClickListener {
                 //persiapan bundle
                 val bundle = Bundle() // object bundle
+//                bundle.put
+//                bundle.putString("email", email)
+//                Log.d("CurrentView", )
                 //Move Page
                 intent = Intent(this, SecondActivity::class.java) // buat intent dengan bundle
                 intent.putExtras(bundle)
