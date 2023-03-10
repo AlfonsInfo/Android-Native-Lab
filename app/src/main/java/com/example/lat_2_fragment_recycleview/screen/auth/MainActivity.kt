@@ -1,10 +1,8 @@
-package com.example.lat_2_fragment_recycleview
+package com.example.lat_2_fragment_recycleview.screen.auth
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.lat_2_fragment_recycleview.entity.Mahasiswa
+import com.example.lat_2_fragment_recycleview.R
 
 //Next Navigasi (:)(:)
 class MainActivity : AppCompatActivity() {
@@ -15,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         //Menampilkan view
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        
+
 
 
     }
