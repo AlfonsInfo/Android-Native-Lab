@@ -6,36 +6,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lat_2_fragment_recycleview.entity.Mahasiswa
 
+//Next Navigasi (:)(:)
 class MainActivity : AppCompatActivity() {
 
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate( savedInstanceState: Bundle?) {
         //Menampilkan view
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.layout_fragment, MainFragment()).commit()
+        
 
 
     }
 
-
-    fun bindingRecycleViewonActivity()
-    {
-        //Set layout manager ke konteks. Layout Manager : Mengatur bagaimana kita menampilkan data, secara vertikal ?
-        //ada 2 kolomkah ? atau secara horizontal ?
-        val layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
-
-        // variable konstan adapter, yang nilainya merupakan objek dari class RVMahasiswaAdapter, dengan parameter companion object dari Mahasiswa
-        val adapter =  RVMahasiswaAdapter(Mahasiswa.listOfMahasiswa)
-
-
-        // Menghubungkan penamoungnya di activity_main dengan RecycleView
-        val rvMahasiswa : RecyclerView = findViewById(R.id.rv_mahasiswa)
-
-        rvMahasiswa.layoutManager = layoutManager // setting layoutnya hori/verti/tabel?
-        rvMahasiswa.setHasFixedSize(true)
-        rvMahasiswa.adapter = adapter // menghubungkan dengan adapter(binding value)
-    }
 }
