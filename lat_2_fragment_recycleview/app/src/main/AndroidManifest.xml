@@ -12,7 +12,7 @@
         android:theme="@style/Theme.Lat_2_fragment_recycleview"
         tools:targetApi="31" >
         <activity
-            android:name=".SecondActivity"
+            android:name=".screen.home.SecondActivity"
             android:exported="false" />
         <activity
             android:name=".screen.auth.MainActivity"

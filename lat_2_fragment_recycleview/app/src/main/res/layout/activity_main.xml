@@ -6,6 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".screen.auth.MainActivity">
 
+    <!--    statis -->
+    <!--    android:name="com.example.lat_2_fragment_recycleview.screen.auth.LoginFragment"-->
+<!--        android:name="com.example.lat_2_fragment_recycleview.screen.auth.LoginFragment"-->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/layout_fragment"
         android:layout_width="match_parent"
@@ -13,7 +16,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+<!--    <androidx.fragment.app.FragmentContainerView-->
+<!--        android:layout_width=""-->
+<!--        android:layout_height=""-->
 
 <!--    <androidx.recyclerview.widget.RecyclerView-->
 <!--        android:id="@+id/rv_mahasiswa"-->
