@@ -25,6 +25,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    //bagaimana cara akses fragment dari activity ?
+    //bisakah passing data antar fragment menggunakan activity?
     fun passValue(user:User)
     {
         value = user

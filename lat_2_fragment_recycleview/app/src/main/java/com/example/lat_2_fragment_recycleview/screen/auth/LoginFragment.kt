@@ -22,6 +22,10 @@ class LoginFragment(datanya:Bundle?): Fragment() {
     private val data = datanya
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(arguments != null)
+        {
+        Log.d("passing via arguments", arguments.toString())
+        }
         if(data!=null)
         {
             Log.d("hasil passing", data.toString())

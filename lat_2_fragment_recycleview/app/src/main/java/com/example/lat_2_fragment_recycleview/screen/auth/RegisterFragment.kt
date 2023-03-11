@@ -109,7 +109,13 @@ class RegisterFragment : Fragment() {
                 //Passing data ke login form
 
                 //Cara akses activity dari fragment
-                (activity as MainActivity).authNavigasi(LoginFragment(bundle))
+                var LoginFragment : LoginFragment
+                LoginFragment = LoginFragment(bundle)
+                LoginFragment.apply {
+                    arguments = bundle
+                }
+                //contoh mengakses fungsi acitivity dari fragment ?
+                (activity as MainActivity).authNavigasi(LoginFragment)
 
             }
 
