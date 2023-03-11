@@ -10,7 +10,6 @@ import com.example.lat_2_fragment_recycleview.R
 class HomeFragment : Fragment() {
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,6 +25,8 @@ class HomeFragment : Fragment() {
         //Agar navbar mengikuti fragment yang aktif
         (activity as SecondActivity).navmenu.menu.getItem(0).isChecked = true
     }
+
+
 
 
 }
