@@ -1,25 +1,36 @@
 package com.example.lat_2_fragment_recycleview.screen.home
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.FragmentManager
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.lat_2_fragment_recycleview.R
 import com.example.lat_2_fragment_recycleview.screen.auth.LoginFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
-
 class SecondActivity : AppCompatActivity() {
 
-    private lateinit var navmenu : BottomNavigationView
+     lateinit var navmenu : BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
 
-        setFragment(HomeFragment())
+        initFragment(HomeFragment())
         navmenu = findViewById(R.id.bottomNav)  // as BottomNavigationView
-        navmenu.setOnItemSelectedListener{
+        navigasi()
+
+
+
+    }
+
+    fun navigasi()
+    {
+
+        navmenu.setOnItemSelectedListener(){
             when(it.itemId){
                 R.id.menu_home -> {
                     setFragment(HomeFragment())
@@ -36,18 +47,49 @@ class SecondActivity : AppCompatActivity() {
                 else -> false
             }
         }
+    }
 
-
-
+    fun initFragment(fragment: Fragment)
+    {
+        getSupportFragmentManager()
+            .beginTransaction()
+//            .addToBackStack(null)
+            .replace(R.id.layout_fragment , fragment )
+            .setCustomAnimations(com.google.android.material.R.anim.abc_fade_out,
+                androidx.appcompat.R.anim.abc_fade_in)
+            .commit()
     }
 
     fun setFragment(fragment: Fragment)
     {
         getSupportFragmentManager()
             .beginTransaction()
+            .addToBackStack(null)
             .replace(R.id.layout_fragment , fragment )
             .setCustomAnimations(com.google.android.material.R.anim.abc_fade_out,
                 androidx.appcompat.R.anim.abc_fade_in)
             .commit()
+        
     }
+
+//    override fun onBackPressed() {
+//        val fm
+//    }
+//    Not Working ? apa di fragment pertama ? bekerja saat addTobackStack dipasang juga
+    override fun onBackPressed() {
+        val fm: FragmentManager = fragmentManager
+        if (fm.getBackStackEntryCount() > 0) {
+            Log.i("MainActivity", "popping backstack")
+            fm.popBackStack()
+        } else {
+            Log.i("MainActivity", "nothing on backstack, calling super")
+            super.onBackPressed()
+        }
+        if(HomeFragment().isVisible)
+        {
+
+        }
+
+    }
+
 }

@@ -34,6 +34,8 @@ class ClassFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //Agar navbar mengikuti fragment yang aktif
+        (activity as SecondActivity).navmenu.menu.getItem(2).isChecked = true
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_class, container, false)
     }
