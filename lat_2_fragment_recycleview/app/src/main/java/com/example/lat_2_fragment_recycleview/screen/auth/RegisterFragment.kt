@@ -1,60 +1,121 @@
 package com.example.lat_2_fragment_recycleview.screen.auth
 
+import android.app.DatePickerDialog
+//import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+//import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.lat_2_fragment_recycleview.R
+import android.widget.Button
+//import androidx.fragment.app.FragmentTransaction
+//import com.example.lat_2_fragment_recycleview.R
+import com.example.lat_2_fragment_recycleview.databinding.FragmentRegisterBinding
+import com.example.lat_2_fragment_recycleview.entity.User
+//import com.example.lat_2_fragment_recycleview.entity.User.Companion.listOfUser
+//import com.example.lat_2_fragment_recycleview.entity.User.Companion.printlist
+import com.google.android.material.textfield.TextInputEditText
+import java.text.SimpleDateFormat
+import java.util.*
+//import com.example.lat_2_fragment_recycleview.screen.auth.MainActivity
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [RegisterFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RegisterFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private lateinit var binding: FragmentRegisterBinding
+    private lateinit var usernameTiet : TextInputEditText
+    private lateinit var passwordTiet : TextInputEditText
+    private lateinit var buttonRegis : Button
+    private lateinit var birthdateTiet : TextInputEditText
+
+    private val calendar = Calendar.getInstance()
+    //date picker
+    private val dateSetListener =
+        DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            calendar.set(Calendar.YEAR, year)
+            calendar.set(Calendar.MONTH, monthOfYear)
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            updateDateEditText()
+        }
+
+    private fun showDatePickerDialog() {
+        DatePickerDialog(
+            requireContext(), dateSetListener,
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        ).show()
+    }
+
+    private fun updateDateEditText() {
+        val dateFormat = "dd/MM/yyyy"
+        val simpleDateFormat = SimpleDateFormat(dateFormat, Locale.US)
+        birthdateTiet.setText(simpleDateFormat.format(calendar.time))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        binding = FragmentRegisterBinding.inflate(layoutInflater)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false)
+    ): View {
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RegisterFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RegisterFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        birthdateTiet = binding.birthdateTiet
+        birthdateTiet.setOnClickListener {
+            showDatePickerDialog()
+        }
+        buttonRegis = binding.btnRegister
+        buttonRegis.setOnClickListener{
+            usernameTiet = binding.usernameTiet
+            passwordTiet = binding.passwordTiet
+            val username = usernameTiet.text.toString()
+            val password = passwordTiet.text.toString()
+            val birthdate = birthdateTiet.text.toString()
+            var statusInput = true
+            if(username == "" ){
+                usernameTiet.setError("Usernamenya Ga boleh kosong Pak !!")
+                statusInput = false
             }
+            if(password == "")
+            {
+                passwordTiet.setError("Passwornya diisi dong bujang")
+                statusInput = false
+            }
+            if(birthdate == "")
+            {
+                birthdateTiet.setError("Kapan lahir woyy ")
+                statusInput = false
+            }
+            if (statusInput){
+
+                //Save Data
+                val user = User(username,password,birthdate,"Member")
+                val bundle = Bundle()
+                bundle.apply {
+                    putString("username",username)
+                    putString("password",password)
+                }
+                //Pindah Ke Login Form
+                //Passing data ke login form
+
+                //Cara akses activity dari fragment
+                (activity as MainActivity).authNavigasi(LoginFragment(bundle))
+
+            }
+
+        }
+
     }
+
+
 }
